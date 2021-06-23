@@ -1,16 +1,17 @@
-import { useState } from "react";
+// Importo todas as propriedades que posso ter no html num botão padrão
+import {ButtonHTMLAttributes } from 'react'
+import '../styles/button.scss'
 
-export function Button(){
-    // let counter = 0;
-    const [counter, setCounter] = useState(0)
-    function increment(){
-        setCounter(counter+1)
-        // counter++;
-        // console.log(counter)
-    }
-    
+// Elemento do botão é global
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+
+
+export function Button(props: ButtonProps){
     return (
-        <button onClick={increment}>{counter}</button>
+        <button className="button" {...props}/>
+            
         
     )
 }
+
+<Button />
