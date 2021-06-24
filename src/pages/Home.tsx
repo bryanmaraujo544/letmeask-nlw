@@ -10,7 +10,9 @@ import { useState } from 'react'
 import { database } from '../services/firebase'
 
 export function Home(){
+    // Hook para fazer redirecionamentos
     const history = useHistory()
+    
 
     const {user, signInWithGoogle} = useAuth()
 
@@ -36,6 +38,10 @@ export function Home(){
         if(!roomRef.exists()){
             alert('Room does not exists.');
             return;
+        }
+
+        if(roomRef.val().endedAt){
+            alert('Room already closed');
         }
 
         history.push(`/rooms/${roomCode}`)
