@@ -64,7 +64,6 @@ export function AdminRoom(){
         const currentQuestion = questions.filter(question => question.id == questionId)
         const questionHighlighted = currentQuestion[0].isHighlighted;
         // const isHighLightedRef = roomRef.val().isHighLighted;
-
         if(questionHighlighted == false){
             await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
                 isHighlighted: true,
@@ -73,8 +72,7 @@ export function AdminRoom(){
             await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
                 isHighlighted: false,
             });
-        }
-            
+        }     
     }
 
 
