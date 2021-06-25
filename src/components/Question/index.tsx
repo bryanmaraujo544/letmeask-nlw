@@ -1,4 +1,6 @@
 import { ReactNode } from "react"
+import cx from 'classnames'
+
 
 type QuestionProps = {
     content: string;
@@ -7,16 +9,24 @@ type QuestionProps = {
         avatar: string;
     }
     children?: ReactNode;
+    isAnswered?: boolean;
+    isHighlighted?: boolean;
 }
 
 // Receberá como propriedades content, e as info do usuário
 export function Question({
     content,
     author,
-    children
+    children,
+    isAnswered = false,
+    isHighlighted = false,
 }: QuestionProps) {
     return (
-        <div className="question">
+        <div className={cx(
+            'question',
+            {answered: isAnswered}, // Chave do objeto é a classe que será colocada caso o valor do objeto seja true
+            { highlighted: isHighlighted && !isAnswered }
+        )}>
             <p>{content}</p>
             <footer>
                 <div className="user-info">

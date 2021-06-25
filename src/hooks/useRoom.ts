@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./useAuth";
 import { database } from '../services/firebase'
-import { NODE_PARENT_VALIDATIONS } from "@babel/types";
+
+
 
 // Pra declarar tipagem de um objeto usa-se o Record. chave é string e o valor é um objeto
 type FirebaseQuestions = Record<string, {
@@ -29,13 +30,14 @@ type QuestionType = {
     isAnswered: boolean;
     likeCount: number;
     likeId: string | undefined;    
-
 }
 
 export function useRoom(roomId: string){
     const { user } = useAuth();
+
     //Estado que vai armazenar as perguntas já tratadas
     const [questions, setQuestions] = useState<QuestionType[]>([]);
+
     const [title, setTitle] = useState('');
 
     // Disparo uma função sempre que a variável roomId sofrer alteração
@@ -52,6 +54,7 @@ export function useRoom(roomId: string){
             const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
             console.log(firebaseQuestions)
             
+            
             //Transforma o objeto de questions em um array {nome: "Bryan", idade: 2} ===> [ ["nome", "Bryan"], ["idade", 2] ]
             const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
                 return {
@@ -60,6 +63,7 @@ export function useRoom(roomId: string){
                     author: value.author,
                     isHighlighted: value.isHighlighted,
                     isAnswered: value.isAnswered,
+                    // Likes também é um objeto, mas não preciso transformá-lo em array, pois só preciso saber quantos registro contém
                     likeCount: Object.values(value.likes ?? {}).length,
 
                     /* O user.id é uma dependencia do use effect, pois é uma variável externa. Caso o usuário 
@@ -67,12 +71,15 @@ export function useRoom(roomId: string){
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
                     // Caso não retorne nada, ele nem acessa a posição zero, que é a chave
                 }
+                console.log(parsedQuestions)
+                
             })
 
             setTitle(databaseRoom.title) 
             setQuestions(parsedQuestions)
             
             return () => {
+                // Fecho o eventListener
                 roomRef.off('value')
             }
 
