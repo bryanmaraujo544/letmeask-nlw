@@ -1,3 +1,5 @@
+import '../styles/global.scss'
+
 import { useHistory } from 'react-router-dom'
 import { FormEvent, useState } from 'react'
 
@@ -42,8 +44,9 @@ export function Home(){
             return;
         }
 
-        if(roomRef.val().endedAt){
+        if(roomRef.val().closedAt){
             alert('Room already closed');
+            return;
         }
 
         history.push(`/rooms/${roomCode}`)
@@ -57,7 +60,9 @@ export function Home(){
                 <p>Tire as dúvidas da sua audiência em tempo-real</p>
             </aside>
             <main>
+                
                 <div className="main-content">
+                    
                     <img src={logoImg} alt="Logo da aplicação" />
                     <button onClick={handleCreateNewRoom} className="create-room">
                         <img src={googleIconImg} alt="Logo do google" />

@@ -1,3 +1,5 @@
+import '../styles/global.scss'
+
 // Importo todas as propriedades que posso ter no html num botão padrão
 import {ButtonHTMLAttributes } from 'react'
 import '../styles/button.scss'

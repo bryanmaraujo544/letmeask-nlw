@@ -1,7 +1,11 @@
+import '../styles/global.scss'
+
 import { useParams } from 'react-router-dom'
 import { FormEvent, useState } from 'react'
 import logoImg from '../assets/images/logo.svg'
 import { Button } from '../components/Button'
+import emptyQuestion from '../assets/images/empty-questions.svg'
+
 import '../styles/room.scss'
 
 import { RoomCode } from '../components/RoomCode'
@@ -12,6 +16,9 @@ import { useRoom } from '../hooks/useRoom'
 
 import { Question } from '../components/Question'
 import '../components/Question/styles.scss'
+
+import { DarkButton } from '../components/DarkButton'
+import '../components/DarkButton/styles.scss'
 
 
 
@@ -75,7 +82,11 @@ export function Room(){
             <header>
             <div className="content">
                 <img src={logoImg} alt="letmeask" />
-                <RoomCode code={roomId}/>
+                <div>
+                    <RoomCode code={roomId}/>
+                    
+                </div>
+                    
             </div>
             </header>
 
@@ -112,6 +123,8 @@ export function Room(){
                 
 
                 <div className="question-list">
+                    <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
+
                     {questions.map(question => {
                         return (
                             <Question

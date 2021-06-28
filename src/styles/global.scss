@@ -1,15 +1,63 @@
-*{
+.mainDiv{
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    --purple:#10E3DF;
+    --purpleHigh: #E8FFFB;
+    --white-black: #fff;
+    --gray-dark: #737380;
+    --gray-medium: #A8A8B3;
+    --gray-light: #DBDCDD;
+    --black-white: #29292E;
+    --white-bg: #f8f8f8;
+    --white-details: #fefefe;
+    --pink-dark: #05FAB1;
+    --pink-light: #D67EE2;
+
+    &.darkMode{
+        --white-black-text: #151515;
+        --purple: #10E3DF;
+        --purpleHigh: #E8FFFB;
+
+        --white-black: #151515;
+        --gray-dark: #737380;
+        --gray-medium: #A8A8B3;
+        --gray-light: #737380;
+        --black-white: #f8f8f8;
+        --white-bg: #090709;
+        --white-details: #020205;
+        --pink-dark: #05FAB1;
+        --pink-light: #D67EE2;
+    }
+
+    background: var(--white-bg);
+    color: var(--black-white);
+}
+
+
+
+// $purple: #835afd;
+// $white-black: #fff;
+// $gray-dark: #737380;
+// $gray-medium: #A8A8B3;
+// $gray-light: #DBDCDD;
+// $black-white: #29292E;
+// $white-bg: #f8f8f8;
+// $white-details: #fefefe;
+// $pink-dark: #E559F9;
+// $pink-light: #D67EE2;
+
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    // background: #f8f8f8;
-    background: red;
-    color: #29292e;
-}
 
-body, input, button, textarea{
+body, input, button, textarea {
     font: 400 16px 'Roboto', sans-serif;
 }
+
+

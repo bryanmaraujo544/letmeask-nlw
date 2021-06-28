@@ -20,7 +20,6 @@ type FirebaseQuestions = Record<string, {
 
 type QuestionType = {
     id: string;
-
     author: {
         name: string;
         avatar: string;
@@ -52,7 +51,7 @@ export function useRoom(roomId: string){
 
             // São as questões já tipadas. Se caso não tiver pergunta retorna um objeto vazio
             const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-            console.log(firebaseQuestions)
+           
             
             
             //Transforma o objeto de questions em um array {nome: "Bryan", idade: 2} ===> [ ["nome", "Bryan"], ["idade", 2] ]
@@ -71,7 +70,7 @@ export function useRoom(roomId: string){
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
                     // Caso não retorne nada, ele nem acessa a posição zero, que é a chave
                 }
-                console.log(parsedQuestions)
+               
                 
             })
 
@@ -88,3 +87,4 @@ export function useRoom(roomId: string){
 
     return { questions, title }
 }
+

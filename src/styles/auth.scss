@@ -1,40 +1,62 @@
+@import 'global.scss';
+
 #page-auth{
-    display: flex;
-    align-items: stretch;
-    height: 100vh;
 
+    
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    grid-template-rows: 1fr;
+    height: 100vh; 
+
+    
+
+
+    // .buttonTheme{
+    //     position: absolute;
+    //     top: 16px;
+    //     right: 32px;
+    // }
+
+    
     aside{
-        flex: 7;
+        grid-column: 1 / 2;
+        grid-row: 1/2;
+        width: 100%;
 
-        background: #835afd;
-        color: #fff;
+        background: var(--purple);
+        color: var(--white-black);
 
         display: flex;
         flex-direction: column;
         justify-content: center;
 
-        padding: 128px 80px;
+        padding: 32px 80px;
 
-        img{
-            max-width: 320px;
+        img {
+            width: 100%;
+            max-width: 300px;
+            
         }
 
-        strong{
+        strong {
             font: 700 36px 'Poppins', sans-serif;
             line-height: 42px;
-            margin-top: 16px
+            margin-top: 16px;
+            z-index: 2;
         }
 
-        p{
+        p {
+            z-index: 2;
             font-size: 24px;
             line-height: 32px;
             margin-top: 16px;
-            color: #f8f8f8;
+            color: var(--white-black);
         }
     }
 
     main{
-        flex: 8;
+        grid-column: 2/3;
+        grid-row: 1/2;
         padding: 0 32px;
         display: flex;
         justify-content: center;
@@ -64,8 +86,9 @@
                 height: 50px;
                 border-radius: 8px;
                 padding: 0 16px;
-                background: #fff;
-                border: 1px solid #a8a8b3;
+                background: var(--white-black);
+                color: var(--black-white);
+                border: 1px solid var(--gray-medium);
             }
 
             button{
@@ -79,11 +102,11 @@
 
         p{
             font-size: 14px;
-            color: #737380;
+            color: var(--gray-dark);
             margin-top: 16px;
 
             a{
-                color: #e559f9;
+                color: var(--pink-dark);
             }
         }
 
@@ -95,7 +118,7 @@
             border-radius: 8px;
             font-weight: 500;
             background: #ea4335;
-            color: #fff;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -114,7 +137,7 @@
 
         .separator{
             font-size: 14px;
-            color: #a8a8b3;
+            color: var(--gray-medium);
             margin: 32px 0;
             display: flex;
             align-items: center;
@@ -123,7 +146,7 @@
                 content:'';
                 flex: 1;
                 height: 1px;
-                background: #a8a8b3;
+                background: var(--gray-medium);
                 margin-right: 16px;
             }
 
@@ -131,9 +154,57 @@
                 content:'';
                 flex: 1;
                 height: 1px;
-                background: #a8a8b3;
+                background: var(--gray-medium);
                 margin-left: 16px;
             }
         }
     }
+    @media (max-width: 768px){
+        &{
+            height: auto;
+            
+            grid-template-columns: 1fr !important;
+            grid-template-rows: 50vh 100vh;
+
+            aside{
+                grid-column: 1/2;
+                grid-row: 1/2;
+                padding: 32px;
+                text-align: center;
+
+                strong {
+                    font-size: 32px;
+                    line-height: 1.5;
+                    
+                }
+        
+                p {
+                    
+                    font-size: 18px;
+                    line-height: 1.5;
+                    
+                }
+               
+
+                img{
+                    position: absolute;
+                    z-index: 1;
+                   
+                }
+            }
+
+            main{
+                grid-column: 1/2;
+                grid-row: 2/3;
+                padding-top: 64px;
+                align-items: flex-start;
+                height: 100%;
+            }
+        }
+    }
+
+    
 }
+
+
+

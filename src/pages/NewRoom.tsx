@@ -1,3 +1,5 @@
+import '../styles/global.scss'
+
 import { FormEvent } from 'react';
 import { database } from '../services/firebase';
 import { Link } from 'react-router-dom'
@@ -36,7 +38,7 @@ export function NewRoom(){
             authorId: user?.id
         })
 
-        history.push(`/rooms/${firebaseRoom.key }`)
+        history.push(`/admin/rooms/${firebaseRoom.key }`)
     }
 
     return (

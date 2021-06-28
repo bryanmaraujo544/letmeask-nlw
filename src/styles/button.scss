@@ -1,10 +1,13 @@
+@import 'global';
+
 .button{
+    
     margin-top: 0px;
     height: 50px;
     border-radius: 8px;
     font-weight: 500;
-    background: #835afd;
-    color: #fff;
+    background: var(--purple);
+    color: var(--white-black);
     padding: 0 32px;
     display: flex;
     justify-content: center;
@@ -12,15 +15,16 @@
     cursor: pointer;
     border: 0;
     transition: filter .2s;
+   
 
     img{
         margin-right: 8px;               
     }
 
     &.outlined{
-        background: #fff;
-        border: 1px solid #835afd;
-        color: #835afd;
+        background: var(--white-black);
+        border: 1px solid var(--purple);
+        color: var(--purple);
     }
 
     &:not(:disabled):hover{
@@ -30,5 +34,13 @@
     &:disabled{
         opacity: 0.6;
         cursor: not-allowed;
+    }
+
+    @media (max-width: 768px){
+        &{
+            height: 36px;
+            padding: 16px 24px;
+            font-size: 12px;
+        }
     }
 }

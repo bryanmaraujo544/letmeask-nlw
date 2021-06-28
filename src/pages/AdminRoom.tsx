@@ -1,15 +1,22 @@
+import '../styles/global.scss'
+
 import { useParams } from 'react-router-dom'
 import { FormEvent, useState } from 'react'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
-import checkImg from '../assets/images/check.svg';
-import answerImg from '../assets/images/answer.svg';
+import checkImg from '../assets/images/check.svg'
+import answerImg from '../assets/images/answer.svg'
+import emptyQuestion from '../assets/images/empty-questions.svg'
 
 import { Button } from '../components/Button'
-import '../styles/room.scss'
-
 import { RoomCode } from '../components/RoomCode'
+import { Question } from '../components/Question'
+import '../components/Question/styles.scss'
+
+import { DarkButton } from '../components/DarkButton'
+import '../components/DarkButton/styles.scss'
+
 import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
 import { useEffect } from 'react'
@@ -17,8 +24,7 @@ import { useRoom } from '../hooks/useRoom'
 
 import { useHistory } from 'react-router'
 
-import { Question } from '../components/Question'
-import '../components/Question/styles.scss'
+import '../styles/room.scss'
 
 
 
@@ -75,8 +81,10 @@ export function AdminRoom(){
         }     
     }
 
+    function handleEnterUserRoom(){
+        history.push(`/rooms/${roomId}`)
+    }
 
-    
     return (
         <div id="page-room">
             <header>
@@ -90,6 +98,14 @@ export function AdminRoom(){
                     >
                         Encerrar sala
                     </Button>
+                    <Button
+                        isOutlined={false}
+                        onClick={handleEnterUserRoom}
+                    >
+                        Visão usuário
+                    </Button>
+
+                    
                 </div>
             </div>
             </header>
@@ -104,6 +120,7 @@ export function AdminRoom(){
                 </div>
 
                 <div className="question-list">
+                    <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
                     {questions.map(question => {
                         
                         return (
