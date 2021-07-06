@@ -1,91 +1,176 @@
 @import '../../styles/global';
 
-.question{
-    background: var(--white-details);
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    padding: 24px;
+.questionContainer{
+    display: flex;
+    flex-direction: column;
+    position: relative;
 
-    // A partir da segunda question terá um margin
-    & + .question{
-        margin-top: 8px;
-    }
+    .question{
+        background: var(--white-details);
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        padding: 24px;
+        
+    
+        // A partir da segunda question terá um margin
+        & + .question{
+            margin-top: 8px;
+        }
+    
+        &.highlighted{
+            background: var(--purpleHigh);
+            border: 1px solid var(--purple);
+    
+            footer .user-info span{
+                color: #23232e;
+            }
+        }
+    
+        
 
-    &.highlighted{
-        background: var(--purpleHigh);
-        border: 1px solid var(--purple);
+        &.withAnswers{
+            margin-bottom: 128px;
+        }
 
-        footer .user-info span{
+        &.answered {
+            
+            position: relative;
+            margin-bottom: 172px;
+            
+        }
+    
+        p{
             color: var(--black-white);
         }
-    }
-
-    &.answered {
-        background: #dbdcdd;
-    }
-
-    p{
-        color: var(--black-white);
-    }
-
-    footer{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 24px;
-
-        .user-info{
+    
+        footer{
             display: flex;
+            justify-content: space-between;
             align-items: center;
-
-            img{
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-            }
-
-            span{
-                margin-left: 8px;
-                color: var(--gray-dark);
-                font-size: 14px;
-
-            }
-        }
-
-        > div{
-            display: flex;
-            gap: 16px;
-        }
-
-        button {
-            border: 0;
-            background: transparent;
-            cursor: pointer;
-            transition: filter .1s;
-
-            &.like-button{
+            margin-top: 24px;
+    
+            .user-info{
                 display: flex;
-                align-items: flex-end;
-                color: #737380;
-                gap: 8px;
-
-                &.liked{
-                    color: var(--purple);
-
-                    svg path{
-                        stroke: var(--purple);
+                align-items: center;
+    
+                img{
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                }
+    
+                span{
+                    margin-left: 8px;
+                    color: var(--gray-dark);
+                    font-size: 14px;
+    
+                }
+            }
+    
+            > div{
+                display: flex;
+                gap: 16px;
+            }
+    
+            button {
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+                transition: filter .1s;
+    
+                &.like-button{
+                    display: flex;
+                    align-items: flex-end;
+                    color: #737380;
+                    gap: 8px;
+    
+                    &.liked{
+                        color: var(--purple);
+    
+                        svg path{
+                            stroke: var(--purple);
+                        }
+                    }
+    
+                    &:hover{
+                        filter: brightness(0.6s);
                     }
                 }
-
+    
                 &:hover{
-                    filter: brightness(0.6s);
+                    filter: brightness(.5)
                 }
+    
             }
 
-            &:hover{
-                filter: brightness(.5)
-            }
+            .div-answer{
+        
+                width: 100%;
+                height: auto;
+                
+                position: absolute;
+                top: 128px;
+                right: 0;
+                
+                display: block;
 
+                
+        
+                .textarea{
+                    position: relative;
+                    background-color: blue;
+                    top: 0;
+                    left: 100%;
+                    transform: translateX(-100%);
+                    width: 90%;
+                    padding: 24px;
+                    border: none;
+                    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+                    background: var(--white-details);
+                    border-radius: 8px;
+                    resize: vertical;
+                    height:96px;
+                    margin-top: 16px;
+                    display: none;
+                    color: var(--black-white);
+                    &.textareaActive{
+                        display: block;
+                        background: var(--gray-medium);
+                        
+                    }
+                    
+                    
+                }
+
+                
+
+                .button{
+                    position: absolute;
+                    right: 0;
+                    background: var(--purple);
+                    color: white;
+                    height: 40px;
+                    margin-top: 8px;
+                    margin-bottom: 32px;
+                    display: none;
+                }
+
+                &.active{
+                    display: block;
+
+                    .button{
+                        display: block;
+                    }
+                    
+                }
+                
+            }
         }
     }
+    
+
+    
+
+    
+    margin-bottom: 32px;
 }

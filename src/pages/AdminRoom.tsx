@@ -1,7 +1,8 @@
 import '../styles/global.scss'
+import cn from 'classnames'
 
 import { useParams } from 'react-router-dom'
-import { FormEvent, useState } from 'react'
+import { FormEvent, ReactNode, useState } from 'react'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
@@ -9,6 +10,7 @@ import checkImg from '../assets/images/check.svg'
 import answerImg from '../assets/images/answer.svg'
 import emptyQuestion from '../assets/images/empty-questions.svg'
 
+import { Answer } from '../components/Answer'
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
 import { Question } from '../components/Question'
@@ -25,6 +27,10 @@ import { useRoom } from '../hooks/useRoom'
 import { useHistory } from 'react-router'
 
 import '../styles/room.scss'
+import { createElement } from 'react'
+import classNames from 'classnames'
+
+
 
 
 
@@ -41,6 +47,10 @@ export function AdminRoom(){
     const {user} = useAuth();
     const [newQuestion, setNewQuestion] = useState('');
     const roomId = params.id;
+
+    const [answerQ, setAnswerQ] = useState('');
+
+
 
     const history = useHistory();
 
@@ -61,9 +71,22 @@ export function AdminRoom(){
     }
 
     async function handleCheckQuestionAsAnswered(questionId: string){
-        await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
-            isAnswered: true,
-        });
+        const currentQuestion = questions.filter(question => question.id == questionId)
+        const questionAnswered = currentQuestion[0].isAnswered;
+        
+        if(questionAnswered == false){
+            await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+                isAnswered: true,
+            })
+        } else {
+            await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+                isAnswered: false,
+            })
+        }
+
+        // await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+        //     isAnswered: true,
+        // });
     }
 
     async function handleHighlightQuestion(questionId: string) {
@@ -81,12 +104,49 @@ export function AdminRoom(){
         }     
     }
 
+    const [answered, setAnswered] = useState(false)
+
+
+    async function handleAnswer(questionId: string){
+        
+        await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+            isAnswered: false,
+        });
+        await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+            answer: answerQ,
+        })
+        const roomRef = await database.ref(`rooms/${roomId}/questions/${questionId}`).get( );
+       
+        if(roomRef.val().answer){
+            await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+                answered: true,
+            })
+        } 
+
+        if(roomRef.val().isAnswered){
+            await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+                answered: false,
+            })
+        }
+
+
+    }
+
+    async function handleDeleteAnswer(questionId: string){
+        await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
+            answered: false,
+        })
+    }
+
     function handleEnterUserRoom(){
         history.push(`/rooms/${roomId}`)
     }
 
+    
     return (
         <div id="page-room">
+            
+            
             <header>
             <div className="content">
                 <img src={logoImg} alt="letmeask" />
@@ -122,27 +182,33 @@ export function AdminRoom(){
                 <div className="question-list">
                     <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
                     {questions.map(question => {
-                        
+                        console.log(question)
                         return (
+                            
                             <Question
                                 // uma chave única para o react acessá-la individualemte.
                                 /* Cado a quesão 454 for deletada, sem a chave, o React recriaria toda a lista novamente 
                                 apenas sem o elemento que foi deleteado */
+                                answer={question.answer}
                                 key={question.id}
                                 content={question.content}
                                 author={question.author}
+                                hasAnswers={question.answered}
                                 isAnswered={question.isAnswered}
                                 isHighlighted={question.isHighlighted}
                             >
-                                {!question.isAnswered && (
-                                    // fragment
+                                
+                                    {/* // fragment */}
                                     <> 
+                                        {/* Botão de highlight */}
                                         <button
                                             type="button"
                                             onClick={() => handleHighlightQuestion(question.id)}
                                         >
                                             <img src={checkImg} alt="Marcar pergunta" />
                                         </button>
+
+                                        {/* Botão de resposta */}
                                         <button
                                             type="button"
                                             onClick={() => handleCheckQuestionAsAnswered(question.id)}
@@ -150,17 +216,68 @@ export function AdminRoom(){
                                             <img src={answerImg} alt="Responder mensagem" />
                                         </button>
                                     </>
-                                )}
+                                
+                                
                                 <button
                                     type="button"
                                     onClick={() => handleDeleteQuestion(question.id)}
                                 >
                                     <img src={deleteImg} alt="Remover pergunta" />
                                 </button>
+
+                                
+                                
+                                
+                                
+                                <div 
+                                    
+                                    className={
+                                        cn(
+                                            'div-answer',
+                                            {active: question.isAnswered}
+                                        )
+                                    }
+                                >
+                                    
+                                    <textarea
+                                        className={
+                                            cn(
+                                                'textarea',
+                                                {textareaActive: question.isAnswered}
+                                            )
+                                        }
+                                        onChange={event => setAnswerQ(event.target.value)}
+                                    />
+                                    
+                                    {question.answered && !question.isAnswered ? 
+                                    
+                                        <Answer content={question?.answer}>
+                                            <button
+                                                type="button"
+                                                className="delete-answer"
+                                                onClick={() => handleDeleteAnswer(question.id)}
+                                            >
+                                                <img src={deleteImg} alt="Remover pergunta" />
+                                            </button>
+                                        </Answer>
+                                    
+                                    : ''}
+                                    
+                        
+                                    <Button
+                                            type="button"
+                                            onClick={() => handleAnswer(question.id)}
+                                            isOutlined={true}
+                                        >
+                                            Responder
+                                    </Button>
+                                </div>
+                                
                             </Question>
                         )
                     })}
                 </div>
+                
 
                 
             </main>

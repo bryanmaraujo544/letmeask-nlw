@@ -11,6 +11,8 @@ type FirebaseQuestions = Record<string, {
         avatar: string;
     } 
     content: string;
+    answer?: string;
+    answered: boolean;
     isHighlighted: boolean;
     isAnswered: boolean;
     likes: Record<string, {
@@ -25,10 +27,12 @@ type QuestionType = {
         avatar: string;
     } 
     content: string;
+    answer?: string;
     isHighlighted: boolean;
     isAnswered: boolean;
     likeCount: number;
-    likeId: string | undefined;    
+    likeId: string | undefined;
+    answered: boolean;
 }
 
 export function useRoom(roomId: string){
@@ -64,7 +68,8 @@ export function useRoom(roomId: string){
                     isAnswered: value.isAnswered,
                     // Likes também é um objeto, mas não preciso transformá-lo em array, pois só preciso saber quantos registro contém
                     likeCount: Object.values(value.likes ?? {}).length,
-
+                    answered: value.answered,
+                    answer: value.answer,
                     /* O user.id é uma dependencia do use effect, pois é uma variável externa. Caso o usuário 
                     troque de id, teria que carregar tudo isso novamente, por isso ela também deve ser monitada */
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]

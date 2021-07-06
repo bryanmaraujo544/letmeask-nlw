@@ -164,7 +164,7 @@
             height: auto;
             
             grid-template-columns: 1fr !important;
-            grid-template-rows: 50vh 100vh;
+            grid-template-rows: 50vh 65vh;
 
             aside{
                 grid-column: 1/2;
@@ -196,7 +196,7 @@
             main{
                 grid-column: 1/2;
                 grid-row: 2/3;
-                padding-top: 64px;
+                padding-top: 48px;
                 align-items: flex-start;
                 height: 100%;
             }

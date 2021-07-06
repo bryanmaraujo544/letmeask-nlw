@@ -1,4 +1,7 @@
 import '../styles/global.scss'
+import cn from 'classnames'
+
+import { Answer } from '../components/Answer'
 
 import { useParams } from 'react-router-dom'
 import { FormEvent, useState } from 'react'
@@ -40,8 +43,6 @@ export function Room(){
 
     const { questions, title } = useRoom(roomId);
 
-    
-
     async function handleSendQuestion(event: FormEvent){
         event.preventDefault();
         if(newQuestion.trim() === ''){
@@ -77,6 +78,16 @@ export function Room(){
 
         
     }
+
+    async function showAnswers(questionId: string){
+        const roomRef = await database.ref(`rooms/${roomId}/questions/${questionId}`).get( );
+        return roomRef.val().answer
+    }
+
+
+
+
+
     return (
         <div id="page-room">
             <header>
@@ -126,18 +137,35 @@ export function Room(){
                     <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
 
                     {questions.map(question => {
+                        {showAnswers(question.id)}
+                        
                         return (
                             <Question
                                 // uma chave única para o react acessá-la individualemte.
                                 /* Cado a quesão 454 for deletada, sem a chave, o React recriaria toda a lista novamente 
                                 apenas sem o elemento que foi deleteado */
                                 key={question.id}
+                                hasAnswers={question.answered}
                                 content={question.content}
                                 author={question.author}
                                 isAnswered={question.isAnswered}
                                 isHighlighted={question.isHighlighted}
+                                
                             >
-                                {!question.isAnswered && (
+                                <div 
+                                    className={
+                                        cn(
+                                            'div-answer',
+                                            {active: question.isAnswered}
+                                        )
+                                    }
+                                >
+                                    {question.answered && !question.isAnswered ? <Answer content={question?.answer}/> : ''}
+                                </div>
+                                
+                                
+                                
+                                
                                     <button
                                         className={`like-button ${question.likeId ? 'liked' : ''}`}
                                         type="button"
@@ -151,9 +179,13 @@ export function Room(){
                                     </svg>
 
                                 </button>
-                                )}
+                                
+                            
                             </Question>
+                            
+                            
                         )
+
                     })}
                 </div>
 

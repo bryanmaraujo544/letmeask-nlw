@@ -37,8 +37,7 @@ function App() {
       
         <AuthContextProvider>
         {/* O switch permite apenas um rota ser acessada */}
-        <Switch>
-            <div 
+        <div 
               className={
                 cn (
                   'mainDiv',
@@ -57,12 +56,15 @@ function App() {
                 changedDark={darkState}
                 onClick={changeTheme}
               />
+        <Switch>
+            
               <Route path="/" exact component = {Home}/>
               <Route path="/rooms/new"  component = {NewRoom}/>
               <Route path="/rooms/:id" component = { Room }/>
               <Route path="/admin/rooms/:id" component = {AdminRoom}/>
-            </div>
+            
         </Switch>
+        </div>
       </AuthContextProvider>
       
       
