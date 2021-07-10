@@ -84,10 +84,6 @@ export function Room(){
         return roomRef.val().answer
     }
 
-
-
-
-
     return (
         <div id="page-room">
             <header>

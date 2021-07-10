@@ -28,13 +28,14 @@ export function AuthContextProvider(props: AuthContextProviderProps){
     // Função que serve o usuário não precisar logar novamente se já tiver logado anteriormente
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
-        if (user){
+        if (user){ 
             const { displayName, photoURL, uid } = user
 
             if(!displayName || !photoURL){
                 throw new Error('Missing information from Google Account')
             }
 
+            // Inisro as informações do usuário dentro do state
             setUser({
                 id: uid,
                 name: displayName,

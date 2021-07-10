@@ -16,7 +16,7 @@ import { RoomCode } from '../components/RoomCode'
 import { Question } from '../components/Question'
 import '../components/Question/styles.scss'
 
-import { DarkButton } from '../components/DarkButton'
+
 import '../components/DarkButton/styles.scss'
 
 import { useAuth } from '../hooks/useAuth'
@@ -27,14 +27,6 @@ import { useRoom } from '../hooks/useRoom'
 import { useHistory } from 'react-router'
 
 import '../styles/room.scss'
-import { createElement } from 'react'
-import classNames from 'classnames'
-
-
-
-
-
-
 
 // O parâmetro deve ter um propriedade id do tipo string
 type PropsParams = {

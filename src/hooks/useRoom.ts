@@ -46,12 +46,13 @@ export function useRoom(roomId: string){
     // Disparo uma função sempre que a variável roomId sofrer alteração
     useEffect(() => {
         const roomRef = database.ref(`rooms/${roomId}`)
-
+        console.log(roomRef)
         // Toda vez que a sala em questão sofre alteração nos seus valores, uma função é disparada
         roomRef.on('value', room => {
-            
+            console.log(room)
             // Room.val() Retorna as questions como objeto, e precisamos dela como array
             const databaseRoom = room.val();
+            console.log(databaseRoom)
 
             // São as questões já tipadas. Se caso não tiver pergunta retorna um objeto vazio
             const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
