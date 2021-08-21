@@ -52,12 +52,9 @@ export function useRoom(roomId: string){
             console.log(room)
             // Room.val() Retorna as questions como objeto, e precisamos dela como array
             const databaseRoom = room.val();
-            console.log(databaseRoom)
-
+           
             // São as questões já tipadas. Se caso não tiver pergunta retorna um objeto vazio
             const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-           
-            
             
             //Transforma o objeto de questions em um array {nome: "Bryan", idade: 2} ===> [ ["nome", "Bryan"], ["idade", 2] ]
             const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
@@ -79,7 +76,6 @@ export function useRoom(roomId: string){
                
                 
             })
-
             setTitle(databaseRoom.title) 
             setQuestions(parsedQuestions)
             

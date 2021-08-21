@@ -26,6 +26,7 @@ export function AuthContextProvider(props: AuthContextProviderProps){
   
     // Função que vai disparar quando a variável for mudada. Variável que será monitorada
     // Função que serve o usuário não precisar logar novamente se já tiver logado anteriormente
+    // Será dispara na primeira renderização do componente pois o array de dependências está vazio
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
         if (user){ 

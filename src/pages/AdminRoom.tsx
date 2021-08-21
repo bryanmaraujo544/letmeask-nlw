@@ -2,7 +2,7 @@ import '../styles/global.scss'
 import cn from 'classnames'
 
 import { useParams } from 'react-router-dom'
-import { FormEvent, ReactNode, useState } from 'react'
+import { FormEvent, ReactNode, useState, useRef } from 'react'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
@@ -34,17 +34,42 @@ type PropsParams = {
 }
 
 export function AdminRoom(){
+    console.log('re-rendered')
     // Uso parâmetros para a rota para pegar o códidgo da sala no URL
     const params = useParams<PropsParams>();
     const {user} = useAuth();
-    const [newQuestion, setNewQuestion] = useState('');
     const roomId = params.id;
-
-    const [answerQ, setAnswerQ] = useState('');
-
-
-
     const history = useHistory();
+    console.log("User", user?.id)
+    const answerQ = useRef('')
+
+
+    async function handleSecurity() {
+        const roomRef = await database.ref(`rooms/${roomId}`).get( )
+        const roomVal = await roomRef.val().authorId
+        console.log("Quem fez a sala", roomVal)
+        if (roomVal !== user?.id) {
+            window.alert("Você não tem acesso a essa sala")
+            history.push("/")
+        } else {
+           
+        }
+    }
+
+    if (user?.id) {
+        handleSecurity()
+    }
+  
+
+
+
+    const answerRef = useRef<HTMLTextAreaElement>(null)
+    //ansRef.current?.classList.add('oi')
+    
+    // const [answerQ, setAnswerQ] = useState('');
+
+
+
 
     const { questions, title } = useRoom(roomId);
 
@@ -115,6 +140,7 @@ export function AdminRoom(){
             })
         } 
 
+        // Vejo se está sendo digitado algo
         if(roomRef.val().isAnswered){
             await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
                 answered: false,
@@ -174,7 +200,7 @@ export function AdminRoom(){
                 <div className="question-list">
                     <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
                     {questions.map(question => {
-                        console.log(question)
+                        
                         return (
                             
                             <Question
@@ -232,13 +258,14 @@ export function AdminRoom(){
                                 >
                                     
                                     <textarea
+                                        ref={answerRef}
                                         className={
                                             cn(
                                                 'textarea',
                                                 {textareaActive: question.isAnswered}
                                             )
                                         }
-                                        onChange={event => setAnswerQ(event.target.value)}
+                                        onChange={event => answerQ.current = event.target.value}
                                     />
                                     
                                     {question.answered && !question.isAnswered ? 
