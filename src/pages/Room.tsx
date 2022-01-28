@@ -14,18 +14,12 @@ import '../styles/room.scss'
 import { RoomCode } from '../components/RoomCode'
 import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
-import { useEffect } from 'react'
 import { useRoom } from '../hooks/useRoom'
 
 import { Question } from '../components/Question'
 import '../components/Question/styles.scss'
 
-import { DarkButton } from '../components/DarkButton'
 import '../components/DarkButton/styles.scss'
-
-
-
-
 
 // O parâmetro deve ter um propriedade id do tipo string
 type PropsParams = {
@@ -116,7 +110,7 @@ export function Room(){
                     <div className="form-footer">
                         { user ? (
                             <div className="user-info">
-                                <img src={user.avatar} alt={user.name} />
+                                <img src={user.avatar} alt={user.name || ''} />
                                 <span>{user.name}</span>
                             </div>
                         ) : (
@@ -130,11 +124,10 @@ export function Room(){
                 
 
                 <div className="question-list">
-                    <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
+                    <img src={emptyQuestion} className={`${questions.length === 0 ? 'empty-question' : 'no-empty'}`} alt="" />
 
                     {questions.map(question => {
-                        {showAnswers(question.id)}
-                        
+                        showAnswers(question.id)
                         return (
                             <Question
                                 // uma chave única para o react acessá-la individualemte.

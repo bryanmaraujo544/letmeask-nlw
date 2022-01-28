@@ -1,12 +1,11 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import {Button} from './components/Button'
 import { Home } from './pages/Home'
 import { NewRoom } from './pages/NewRoom'
 import {Room} from './pages/Room'
 import { AuthContextProvider } from './contexts/AuthContext'
 import { AdminRoom } from './pages/AdminRoom'
 import {DarkButton} from './components/DarkButton'
-import { useState, createContext } from 'react'
+import { useState } from 'react'
 
 import cn from 'classnames'
 

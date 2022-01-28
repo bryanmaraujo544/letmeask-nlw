@@ -2,7 +2,7 @@ import '../styles/global.scss'
 import cn from 'classnames'
 
 import { useParams } from 'react-router-dom'
-import { FormEvent, ReactNode, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
@@ -21,7 +21,6 @@ import '../components/DarkButton/styles.scss'
 
 import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
-import { useEffect } from 'react'
 import { useRoom } from '../hooks/useRoom'
 
 import { useHistory } from 'react-router'
@@ -59,17 +58,11 @@ export function AdminRoom(){
     if (user?.id) {
         handleSecurity()
     }
-  
-
-
 
     const answerRef = useRef<HTMLTextAreaElement>(null)
     //ansRef.current?.classList.add('oi')
     
     // const [answerQ, setAnswerQ] = useState('');
-
-
-
 
     const { questions, title } = useRoom(roomId);
 
@@ -88,10 +81,10 @@ export function AdminRoom(){
     }
 
     async function handleCheckQuestionAsAnswered(questionId: string){
-        const currentQuestion = questions.filter(question => question.id == questionId)
+        const currentQuestion = questions.filter(question => question.id === questionId)
         const questionAnswered = currentQuestion[0].isAnswered;
         
-        if(questionAnswered == false){
+        if(questionAnswered === false){
             await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
                 isAnswered: true,
             })
@@ -107,10 +100,10 @@ export function AdminRoom(){
     }
 
     async function handleHighlightQuestion(questionId: string) {
-        const currentQuestion = questions.filter(question => question.id == questionId)
+        const currentQuestion = questions.filter(question => question.id === questionId)
         const questionHighlighted = currentQuestion[0].isHighlighted;
         // const isHighLightedRef = roomRef.val().isHighLighted;
-        if(questionHighlighted == false){
+        if(questionHighlighted === false){
             await database.ref(`/rooms/${roomId}/questions/${questionId}`).update({
                 isHighlighted: true,
             });
@@ -120,9 +113,6 @@ export function AdminRoom(){
             });
         }     
     }
-
-    const [answered, setAnswered] = useState(false)
-
 
     async function handleAnswer(questionId: string){
         
@@ -198,9 +188,8 @@ export function AdminRoom(){
                 </div>
 
                 <div className="question-list">
-                    <img src={emptyQuestion} className={`${questions.length == 0 ? 'empty-question' : 'no-empty'}`}/>
+                    <img src={emptyQuestion} className={`${questions.length === 0 ? 'empty-question' : 'no-empty'}`} alt="empty-question" />
                     {questions.map(question => {
-                        
                         return (
                             
                             <Question
@@ -242,13 +231,8 @@ export function AdminRoom(){
                                 >
                                     <img src={deleteImg} alt="Remover pergunta" />
                                 </button>
-
-                                
-                                
-                                
                                 
                                 <div 
-                                    
                                     className={
                                         cn(
                                             'div-answer',

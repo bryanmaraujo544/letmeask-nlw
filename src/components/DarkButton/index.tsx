@@ -1,7 +1,6 @@
 import '../../styles/global.scss'
 import './styles.scss';
-import {ButtonHTMLAttributes, useState } from 'react'
-import {useRef} from 'react';
+import {ButtonHTMLAttributes } from 'react'
 
 // Elemento do botão é global
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
