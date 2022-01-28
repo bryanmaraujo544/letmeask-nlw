@@ -2,7 +2,7 @@ import '../styles/global.scss'
 import cn from 'classnames'
 
 import { useParams } from 'react-router-dom'
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 
 import logoImg from '../assets/images/logo.svg'
 import deleteImg from '../assets/images/delete.svg'
